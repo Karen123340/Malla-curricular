@@ -22,8 +22,11 @@ h1 {
 
 /* ... (reglas :root, body, h1 anteriores) ... */
 
+/* ... (Reglas :root y body anteriores) ... */
+
 #malla-container {
-  display: flex;
+  /* ESTAS LÍNEAS DEBEN ESTAR AQUÍ, SON LA CLAVE DEL LAYOUT HORIZONTAL */
+  display: flex; 
   flex-wrap: nowrap;
   overflow-x: auto;
   padding: 20px;
@@ -32,10 +35,10 @@ h1 {
 }
 
 .semestre {
-  /* ESTAS DOS LÍNEAS HACEN QUE LAS ASIGNATURAS SE APILEN COMO CAJAS */
+  /* ESTAS LÍNEAS DEBEN ESTAR AQUÍ, SON LA CLAVE DEL LAYOUT VERTICAL DE ASIGNATURAS */
   display: flex;
   flex-direction: column; 
-  /* ------------------------------------------------------------- */
+  /* -------------------------------------------------------------------------- */
   
   background-color: #F9F4EF; 
   border: 1px solid #e0dcd8;
@@ -44,6 +47,8 @@ h1 {
   min-width: 220px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
+
+/* ... (Reglas .semestre h2, .ramo, y colores/estados anteriores) ... */
 
 .semestre h2 {
   margin-top: 0;
