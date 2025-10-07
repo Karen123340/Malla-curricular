@@ -1,6 +1,5 @@
 const estadoRamos = JSON.parse(localStorage.getItem("estadoRamos")) || {};
 
-// Clasificación de tipos
 const tipos = {
   fundacion: [
     "Cálculo Diferencial", "Sociología especial: industrial y del trabajo",
@@ -33,7 +32,6 @@ const tipos = {
   trabajo: ["Trabajo de grado"]
 };
 
-// Objeto con las asignaturas
 const ramos = {
       "Cálculo Diferencial": {
     semestre: 1, creditos: 4, prerequisitos: [],
@@ -195,12 +193,12 @@ function tipoAsignatura(nombre) {
   for (const [tipo, lista] of Object.entries(tipos)) {
     if (lista.includes(nombre)) return tipo;
   }
-  return "libre";  // Si no se encuentra, asigna el tipo "libre"
+  return "libre";
 }
 
 function guardarEstado() {
   localStorage.setItem("estadoRamos", JSON.stringify(estadoRamos));
-  actualizarContadores();
+  calcularPromedios();
 }
 
 function crearContenedoresSemestre() {
@@ -219,49 +217,46 @@ function crearCaja(nombre, datos) {
   const tipo = tipoAsignatura(nombre);
   div.className = `ramo ${tipo}`;
   div.id = nombre;
-  div.innerHTML = `<strong>${nombre}</strong><br><span>${datos.creditos} créditos</span>`;
+  div.innerHTML = `<strong>${nombre}</strong><br><span>${datos.creditos} créditos</span><br>
+                  <label for="nota${nombre}">Nota: </label>
+                  <input type="number" id="nota${nombre}" class="nota" min="1" max="7" step="0.1">`;
 
   const container = document.querySelector(`#semestre${datos.semestre} .contenedor-semestre`);
   if (container) container.appendChild(div);
 
   if (!estadoRamos.hasOwnProperty(nombre)) estadoRamos[nombre] = false;
 
-  if (
-    datos.prerequisitos.length === 0 ||
-    datos.prerequisitos.every(pre => estadoRamos[pre])
-  ) {
-    div.classList.remove("bloqueado");
-  }
-
-  if (estadoRamos[nombre]) {
-    div.classList.add("aprobado");
-    div.classList.remove("bloqueado");
-  }
-
-  div.onclick = () => {
-    if (estadoRamos[nombre]) return;
-
-    estadoRamos[nombre] = true;
-    div.classList.add("aprobado");
-    div.classList.remove("bloqueado");
-    guardarEstado();
-
-    Object.entries(ramos).forEach(([destino, datosDestino]) => {
-      if (!estadoRamos[destino] && datosDestino.prerequisitos.every(pre => estadoRamos[pre])) {
-        document.getElementById(destino)?.classList.remove("bloqueado");
-      }
-    });
-  };
+  const inputNota = document.getElementById(`nota${nombre}`);
+  inputNota.addEventListener("input", function() {
+    calcularPromedios();
+  });
 }
 
-function actualizarContadores() {
-  const total = 168;
-  let completados = 0;
-  for (const [nombre, aprobado] of Object.entries(estadoRamos)) {
-    if (aprobado && ramos[nombre]) completados += ramos[nombre].creditos;
-  }
-  document.getElementById("creditosCompletados").textContent = completados;
-  document.getElementById("porcentajeAvance").textContent = ((completados / total) * 100).toFixed(2);
+function calcularPromedios() {
+  let totalCreditosSemestrales = 0;
+  let sumaPonderadaSemestral = 0;
+
+  let totalCreditosCarrera = 0;
+  let sumaPonderadaCarrera = 0;
+
+  Object.entries(ramos).forEach(([nombre, datos]) => {
+    const nota = parseFloat(document.getElementById(`nota${nombre}`)?.value || 0);
+    if (nota && nota >= 1 && nota <= 7) {
+      const creditos = datos.creditos;
+
+      totalCreditosSemestrales += creditos;
+      sumaPonderadaSemestral += creditos * nota;
+
+      totalCreditosCarrera += creditos;
+      sumaPonderadaCarrera += creditos * nota;
+    }
+  });
+
+  const promedioSemestral = (sumaPonderadaSemestral / totalCreditosSemestrales).toFixed(2);
+  document.getElementById("pappi").textContent = `P.A.P.P.I.: ${promedioSemestral}`;
+
+  const promedioCarrera = (sumaPonderadaCarrera / totalCreditosCarrera).toFixed(2);
+  document.getElementById("papa").textContent = `P.A.P.A.: ${promedioCarrera}`;
 }
 
 function reiniciarProgreso() {
@@ -277,6 +272,6 @@ window.onload = () => {
   Object.entries(ramos).forEach(([nombre, datos]) => {
     crearCaja(nombre, datos);
   });
-  actualizarContadores();
+  calcularPromedios();
   document.getElementById("botonReiniciar").addEventListener("click", reiniciarProgreso);
 };
