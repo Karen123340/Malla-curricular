@@ -1,17 +1,18 @@
 /* script.js
-   - Usa 'prerequisitos' y/o 'desbloquea' del objeto ramos.
-   - Si A.desbloquea incluye B entonces B.prerequisitos incluirá A (normalización).
-   - Materia desbloqueada solo cuando TODOS sus prerrequisitos están aprobados (nota >= 3.0).
-   - No hay nota por defecto; guarda en localStorage.
+   - Usa todo el objeto 'ramos' que me diste.
+   - 'desbloquea' se transforma en prerequisitos de los destinos.
+   - Materia desbloqueada solo si TODOS los prerequisitos están aprobados (nota >= 3.0).
+   - "Matemáticas Basicas" no suma créditos (creditos = 0).
+   - Notas 1.0-5.0, paso 0.1, sin valor por defecto.
+   - Guarda/recupera en localStorage.
 */
 
-const STORAGE_KEY = "malla_estado_v1";
+const STORAGE_KEY = "malla_estado_v2";
 
-/* --------------------- OBJETO RAMOS (usa los nombres que pegaste) --------------------- */
-/* He corregido comas/sintaxis y mantuve las claves tal como las pegaste. */
+/* -------------------- OBJETO RAMOS (pegado tal como tú lo diste) -------------------- */
 const ramos = {
   "Matemáticas Basicas": {
-    semestre: 1, creditos: 4, prerequisitos: [],
+    semestre: 1, creditos: 0, prerequisitos: [],
     desbloquea: ["Cálculo Diferencial"]
   },
   "Cálculo Diferencial": {
@@ -170,88 +171,79 @@ const ramos = {
   "Trabajo de grado": { semestre: 10, creditos: 6, prerequisitos: [] }
 };
 
-/* --------------------- NORMALIZAR: si un ramo tiene 'desbloquea', convertirlo en prerequisito del destino --------------------- */
-for (const [nombre, datos] of Object.entries(ramos)) {
-  const des = datos.desbloquea || [];
-  des.forEach(dest => {
+/* -------------------- normalizar 'desbloquea' -> agregar a prerequisitos del destino -------------------- */
+for (const [origen, datos] of Object.entries(ramos)) {
+  if (!Array.isArray(datos.desbloquea)) continue;
+  datos.desbloquea.forEach(dest => {
     if (!ramos[dest]) {
-      console.warn(Desbloquea: destino "${dest}" no existe en ramos (desde "${nombre}"));
+      console.warn(`Aviso: "${origen}" desbloquea "${dest}" pero "${dest}" no existe en el objeto ramos.`);
       return;
     }
     if (!Array.isArray(ramos[dest].prerequisitos)) ramos[dest].prerequisitos = [];
-    if (!ramos[dest].prerequisitos.includes(nombre)) {
-      ramos[dest].prerequisitos.push(nombre);
-    }
+    if (!ramos[dest].prerequisitos.includes(origen)) ramos[dest].prerequisitos.push(origen);
   });
 }
 
-/* --------------------- estado guardado --------------------- */
+/* -------------------- estado guardado (por nombre de materia) -------------------- */
 const estadoGuardado = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
 
-/* mapas nombre<->id seguros */
+/* mapas nombre <-> id seguro (slug) */
 const nameToId = {}, idToName = {};
-
-/* slugify */
-function slugify(text) {
-  return text
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-zA-Z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .toLowerCase();
+function slugify(text){
+  return String(text)
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-zA-Z0-9]+/g,"-").replace(/^-+|-+$/g,"").toLowerCase();
 }
 
-/* crear columnas */
-function crearContenedoresSemestre() {
+/* crear columnas de semestres y tarjetas */
+function crearContenedoresSemestre(){
   const malla = document.getElementById("malla-container");
   malla.innerHTML = "";
-  for (let i = 1; i <= 10; i++) {
+  for (let i=1;i<=10;i++){
     const col = document.createElement("div");
-    col.className = "semestre";
-    col.id = semestre${i};
-    col.innerHTML = <h2>Semestre ${i}</h2><div class="contenedor-semestre"></div>;
+    col.className = `semestre sem${i}`;
+    col.id = `semestre${i}`;
+    col.innerHTML = `<h2>${i}° Semestre</h2><div class="contenedor-semestre"></div>`;
     malla.appendChild(col);
   }
 }
 
-/* verifica si todos los prerequisitos de 'nombre' están aprobados */
-function verificarPrerequisitos(nombre) {
+/* verificar si todos los prerequisitos de 'nombre' están aprobados */
+function prerequisitosCumplidos(nombre){
   const datos = ramos[nombre];
   const prereqs = datos.prerequisitos || [];
   if (prereqs.length === 0) return true;
-  return prereqs.every(p => {
-    return !!(estadoGuardado[p] && estadoGuardado[p].aprobado === true);
-  });
+  return prereqs.every(p => !!(estadoGuardado[p] && estadoGuardado[p].aprobado === true));
 }
 
-/* crea la tarjeta de la materia */
-function crearCaja(nombre, datos) {
+/* crear tarjeta de materia */
+function crearCaja(nombre, datos){
   const slug = slugify(nombre);
-  nameToId[nombre] = slug;
-  idToName[slug] = nombre;
+  nameToId[nombre] = slug; idToName[slug] = nombre;
 
-  const div = document.createElement("div");
-  div.className = "ramo " + tipoClase(nombre);
-  div.id = slug;
-  div.title = (datos.prerequisitos && datos.prerequisitos.length) ? Prerrequisitos: ${datos.prerequisitos.join(", ")} : "Sin prerrequisitos";
+  const contenedor = document.querySelector(`#semestre${datos.semestre} .contenedor-semestre`);
+  if (!contenedor) return; // defensa
 
   const saved = estadoGuardado[nombre] || { nota: null, aprobado: false };
-  const notaValue = (saved && saved.nota != null) ? saved.nota : "";
+  const div = document.createElement("div");
+  div.className = "ramo";
+  div.id = slug;
+  div.title = (datos.prerequisitos && datos.prerequisitos.length) ? `Prerrequisitos: ${datos.prerequisitos.join(", ")}` : "";
 
   div.innerHTML = `
-    <strong>${nombre}</strong><br>
-    <small>${datos.creditos} créditos</small><br>
-    <input type="number" class="nota" min="1" max="5" step="0.1" placeholder="" value="${notaValue}">
+    <strong>${nombre}</strong>
+    <div style="font-size:0.9em;color:#555;margin-top:6px">${datos.creditos} créditos</div>
+    <input type="number" class="nota" min="1" max="5" step="0.1" placeholder="" value="${saved.nota != null ? saved.nota : ""}">
   `;
 
-  const container = document.querySelector(#semestre${datos.semestre} .contenedor-semestre);
-  if (container) container.appendChild(div);
+  contenedor.appendChild(div);
 
   if (saved.aprobado) div.classList.add("aprobado");
   else if (saved.nota != null && !isNaN(saved.nota) && saved.nota < 3.0) div.classList.add("reprobado");
 
   const input = div.querySelector(".nota");
-  const prereqOk = verificarPrerequisitos(nombre);
-  if (!prereqOk && !saved.aprobado) {
+  const ok = prerequisitosCumplidos(nombre);
+  if (!ok && !saved.aprobado) {
     div.classList.add("bloqueado");
     input.disabled = true;
   } else {
@@ -275,13 +267,8 @@ function crearCaja(nombre, datos) {
       } else {
         estadoGuardado[nombre].nota = parseFloat(val.toFixed(1));
         estadoGuardado[nombre].aprobado = estadoGuardado[nombre].nota >= 3.0;
-        if (estadoGuardado[nombre].aprobado) {
-          div.classList.add("aprobado");
-          div.classList.remove("reprobado","bloqueado");
-        } else {
-          div.classList.add("reprobado");
-          div.classList.remove("aprobado");
-        }
+        if (estadoGuardado[nombre].aprobado) { div.classList.add("aprobado"); div.classList.remove("reprobado","bloqueado"); }
+        else { div.classList.add("reprobado"); div.classList.remove("aprobado"); }
       }
     }
 
@@ -291,54 +278,35 @@ function crearCaja(nombre, datos) {
   });
 }
 
-/* heurística para elegir clase por color */
-function tipoClase(nombre) {
-  if (/calculo|matem/i.test(nombre)) return "fundacion";
-  if (/taller|taller de|taller/i.test(nombre)) return "disciplinar";
-  if (/libre/i.test(nombre)) return "libre";
-  if (/Trabajo de grado/i.test(nombre)) return "trabajo";
-  return "disciplinar";
-}
-
-/* actualizar bloqueos de todas las materias */
-function actualizarBloqueos() {
-  for (const nombre of Object.keys(ramos)) {
+/* actualizar bloqueos: habilita inputs si prereqs ok o si materia ya aprobada */
+function actualizarBloqueos(){
+  for (const nombre of Object.keys(ramos)){
     const slug = nameToId[nombre];
     const div = document.getElementById(slug);
     if (!div) continue;
     const input = div.querySelector(".nota");
-    const saved = estadoGuardado[nombre] || { nota: null, aprobado: false };
-    const prereqOk = verificarPrerequisitos(nombre);
+    const saved = estadoGuardado[nombre] || { nota:null, aprobado:false };
+    const ok = prerequisitosCumplidos(nombre);
 
-    if (saved.aprobado) {
-      div.classList.remove("bloqueado");
-      input.disabled = false;
-      continue;
-    }
-
-    if (prereqOk) {
-      div.classList.remove("bloqueado");
-      input.disabled = false;
-    } else {
-      div.classList.add("bloqueado");
-      input.disabled = true;
-    }
+    if (saved.aprobado) { div.classList.remove("bloqueado"); input.disabled = false; continue; }
+    if (ok) { div.classList.remove("bloqueado"); input.disabled = false; }
+    else { div.classList.add("bloqueado"); input.disabled = true; }
   }
 }
 
-/* actualizar contadores y promedios (1 decimal) */
-function actualizarContadores() {
+/* calcular promedios y contadores (1 decimal) - EXCLUYE "Matemáticas Basicas" de créditos */
+function actualizarContadores(){
   let sumaPonderada = 0, totalCredNota = 0, creditosAprobados = 0;
-  for (const [nombre, datos] of Object.entries(ramos)) {
+  for (const [nombre, datos] of Object.entries(ramos)){
     const estado = estadoGuardado[nombre];
-    if (estado && estado.nota != null && !isNaN(estado.nota)) {
+    if (estado && estado.nota != null && !isNaN(estado.nota)){
       const c = datos.creditos || 0;
+      // si materia es "Matemáticas Basicas" (creditos 0) no afecta
       sumaPonderada += estado.nota * c;
       totalCredNota += c;
       if (estado.aprobado) creditosAprobados += c;
     }
   }
-
   const papa = totalCredNota ? (sumaPonderada / totalCredNota).toFixed(1) : "0.0";
   const pappi = papa;
   const porcentaje = ((creditosAprobados / 168) * 100).toFixed(1);
@@ -350,23 +318,22 @@ function actualizarContadores() {
 }
 
 /* guardar en localStorage */
-function guardarEstado() {
+function guardarEstado(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(estadoGuardado));
 }
 
-/* reiniciar */
-function reiniciarProgreso() {
-  if (!confirm("Deseas reiniciar todo el progreso?")) return;
+/* reiniciar progreso */
+function reiniciarProgreso(){
+  if (!confirm("¿Deseas reiniciar todo el progreso?")) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
 }
 
-/* inicialización */
+/* inicializar UI */
 window.addEventListener("DOMContentLoaded", () => {
   crearContenedoresSemestre();
   for (const [nombre, datos] of Object.entries(ramos)) crearCaja(nombre, datos);
   actualizarBloqueos();
   actualizarContadores();
-  const boton = document.getElementById("botonReiniciar");
-  if (boton) boton.addEventListener("click", reiniciarProgreso);
+  document.getElementById("botonReiniciar").addEventListener("click", reiniciarProgreso);
 });
