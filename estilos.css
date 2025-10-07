@@ -20,16 +20,23 @@ h1 {
   font-size: 1.8em;
 }
 
+/* ... (reglas anteriores) ... */
+
 #malla-container {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto; /* Permite scroll horizontal */
+  overflow-x: auto;
   padding: 20px;
   gap: 20px;
   justify-content: flex-start;
 }
 
 .semestre {
+  /* <<< ASEGÚRATE DE INCLUIR ESTAS DOS LÍNEAS >>> */
+  display: flex;
+  flex-direction: column; 
+  /* <<< FIN DE LAS LÍNEAS CLAVE >>> */
+  
   background-color: #F9F4EF; 
   border: 1px solid #e0dcd8;
   border-radius: 12px;
@@ -40,6 +47,7 @@ h1 {
 
 .semestre h2 {
   margin-top: 0;
+  margin-bottom: 10px; /* Nuevo */
   font-size: 1.4em;
   color: #4a4a4a;
 }
@@ -54,6 +62,7 @@ h1 {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
+/* ... (resto de reglas de tipos, aprobado, bloqueado) ... */
 /* Tipos de ramos */
 .fundacion {
   background-color: var(--color-fundacion);
