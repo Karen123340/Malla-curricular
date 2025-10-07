@@ -1,15 +1,15 @@
 :root {
-  --color-fundacion: #E1C6FF;      /* Morado claro pastel */
-  --color-disciplinar: #D0B0FF;    /* Morado medio pastel */
-  --color-libre: #E6D3FF;          /* Lavanda suave */
-  --color-trabajo: #DCC6FF;        /* Lila claro */
+  --color-fundacion: #E1C6FF;
+  --color-disciplinar: #D0B0FF;
+  --color-libre: #E6D3FF;
+  --color-trabajo: #DCC6FF;
   --color-bloqueado: #f0f0f0;
-  --color-aprobado: #b6ffcb;       /* Verde menta claro */
-} 
+  --color-aprobado: #b6ffcb;
+}
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #FFFDFB; /* Fondo general casi blanco, rosado muy suave */
+  background-color: #FFFDFB;
   margin: 0;
   padding: 0;
   text-align: center;
@@ -30,7 +30,7 @@ h1 {
 }
 
 .semestre {
-  background-color: #F9F4EF; /* Cuadros de semestre: beige rosado clarito */
+  background-color: #F9F4EF;
   border: 1px solid #e0dcd8;
   border-radius: 12px;
   padding: 12px;
@@ -54,7 +54,6 @@ h1 {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
-/* Tipos de ramos */
 .fundacion {
   background-color: var(--color-fundacion);
 }
@@ -105,4 +104,11 @@ h1 {
 #avance {
   margin-top: 10px;
   font-weight: bold;
+}
+
+input[type="number"] {
+  margin-top: 5px;
+  padding: 5px;
+  font-size: 1em;
+  width: 80px;
 }
