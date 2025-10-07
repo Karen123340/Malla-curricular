@@ -1,4 +1,3 @@
-/* estilos generales */
 :root{
   --bg: #fffafc;
   --card: #fff;
@@ -18,16 +17,8 @@ body{
   padding:18px;
 }
 
-/* header */
-header{
-  margin-bottom:14px;
-}
-h1{
-  margin:0;
-  font-size:28px;
-  color:#0f0f0f;
-  letter-spacing:0.2px;
-}
+header{ margin-bottom:14px; }
+h1{ margin:0; font-size:28px; color:#0f0f0f; letter-spacing:0.2px; }
 
 /* layout: malla (horizontally scrollable) */
 #malla-container{
@@ -72,14 +63,14 @@ h1{
 }
 .ramo:hover{ transform: translateY(-3px); }
 
-/* tipos (solo para color base, puedes ajustar) */
+/* tipos (solo para color base, se detectan por nombre) */
 .ramo.fundacion { background:#e8d5ff; }
 .ramo.disciplinar { background:#d9ffe2; }
 .ramo.libre { background:#fff1d6; }
 .ramo.trabajo { background:#ffdede; }
 
 /* estado visual */
-.ramo.bloqueado { opacity:0.45; }
+.ramo.bloqueado { opacity:0.45; pointer-events:none; }
 .ramo.aprobado { text-decoration:line-through; opacity:0.8; }
 
 /* input nota */
