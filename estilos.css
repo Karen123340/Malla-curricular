@@ -1,130 +1,108 @@
-/* Bloque de variables de color (ASEGÚRATE DE LA SINTAXIS) */
 :root {
-  --color-fundacion: #E1C6FF;      /* Morado claro pastel */
-  --color-disciplinar: #D0B0FF;    /* Morado medio pastel */
-  --color-libre: #E6D3FF;          /* Lavanda suave */
-  --color-trabajo: #DCC6FF;        /* Lila claro */
-  --color-bloqueado: #f0f0f0;
-  --color-aprobado: #b6ffcb;       /* Verde menta claro */
-} 
+  --color-fundacion: #E1C6FF;      /* Morado claro pastel */
+  --color-disciplinar: #D0B0FF;    /* Morado medio pastel */
+  --color-libre: #E6D3FF;          /* Lavanda suave */
+  --color-trabajo: #DCC6FF;        /* Lila claro */
+  --color-bloqueado: #f0f0f0;
+  --color-aprobado: #b6ffcb;       /* Verde menta claro */
+} 
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #FFFDFB; 
-  margin: 0;
-  padding: 0;
-  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #FFFDFB; /* Fondo general casi blanco, rosado muy suave */
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
 
 h1 {
-  margin-top: 20px;
-  font-size: 1.8em;
+  margin-top: 20px;
+  font-size: 1.8em;
 }
 
-/* 1. LAYOUT DE LA MALLA (Horizontal) */
 #malla-container {
-  display: flex; 
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  padding: 20px;
-  gap: 20px;
-  justify-content: flex-start;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 20px;
+  gap: 20px;
+  justify-content: flex-start;
 }
 
-/* 2. LAYOUT DEL SEMESTRE (Vertical) */
 .semestre {
-  display: flex;
-  flex-direction: column; 
-  
-  background-color: #F9F4EF; 
-  border: 1px solid #e0dcd8;
-  border-radius: 12px;
-  padding: 12px;
-  min-width: 220px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  background-color: #F9F4EF; /* Cuadros de semestre: beige rosado clarito */
+  border: 1px solid #e0dcd8;
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 220px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .semestre h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1.4em;
-  color: #4a4a4a;
+  margin-top: 0;
+  font-size: 1.4em;
+  color: #4a4a4a;
 }
 
-/* 3. ESTILO DE LA ASIGNATURA (Caja) */
 .ramo {
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px 0;
-  font-weight: bold;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 /* Tipos de ramos */
 .fundacion {
-  background-color: var(--color-fundacion);
+  background-color: var(--color-fundacion);
 }
 
 .disciplinar {
-  background-color: var(--color-disciplinar);
+  background-color: var(--color-disciplinar);
 }
 
 .libre {
-  background-color: var(--color-libre);
+  background-color: var(--color-libre);
 }
 
 .trabajo {
-  background-color: var(--color-trabajo);
+  background-color: var(--color-trabajo);
 }
 
-/* Estado Bloqueado */
 .bloqueado {
-  background-color: var(--color-bloqueado) !important;
-  color: #aaa;
-  text-decoration: none;
-  cursor: not-allowed;
-  opacity: 0.6;
-  box-shadow: none;
+  background-color: var(--color-bloqueado) !important;
+  color: #aaa;
+  text-decoration: none;
+  cursor: not-allowed;
 }
 
-/* Estado Aprobado */
 .aprobado {
-  background-color: var(--color-aprobado) !important;
-  text-decoration: line-through;
-  opacity: 0.8;
-  cursor: default !important;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) inset;
+  background-color: var(--color-aprobado) !important;
+  text-decoration: line-through;
+  opacity: 0.8;
 }
-
-/* Hover */
-.ramo:not(.bloqueado):not(.aprobado):hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transform: translateY(-2px);
-}
-
 
 #footer {
-  margin: 20px;
+  margin: 20px;
 }
 
 #botonReiniciar {
-  padding: 10px 20px;
-  font-size: 1em;
-  background-color: #ce93d8;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #ce93d8;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
 }
 
 #botonReiniciar:hover {
-  background-color: #ab47bc;
+  background-color: #ab47bc;
 }
 
 #avance {
-  margin-top: 10px;
-  font-weight: bold;
+  margin-top: 10px;
+  font-weight: bold;
 }
