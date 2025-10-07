@@ -1,29 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Malla Curricular - Ingeniería Industrial</title>
-  <link rel="stylesheet" href="estilos.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malla Curricular Ingeniería Industrial</title>
+  <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
   <header>
     <h1>Malla Curricular Ingeniería Industrial</h1>
   </header>
 
-  <main id="main">
-    <!-- Contenedor donde se renderizan las filas (un fila = un semestre) -->
-    <div id="malla"></div>
+  <main id="malla">
+    <!-- Cada semestre es una columna vertical -->
+    <div class="semestre" id="sem1">
+      <h2>Semestre 1</h2>
+      <div class="materia" data-nombre="Matemáticas Básicas" data-creditos="0">
+        Matemáticas Básicas<br>
+        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
+      </div>
+      <div class="materia" data-nombre="Cálculo Diferencial" data-creditos="3">
+        Cálculo Diferencial<br>
+        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
+      </div>
+      <div class="materia" data-nombre="Álgebra Lineal" data-creditos="3">
+        Álgebra Lineal<br>
+        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
+      </div>
+      <div class="materia" data-nombre="Química" data-creditos="2">
+        Química<br>
+        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
+      </div>
+    </div>
+
+    <div class="semestre" id="sem2">
+      <h2>Semestre 2</h2>
+      <div class="materia" data-nombre="Cálculo Integral" data-creditos="3" data-prerrequisitos="Cálculo Diferencial">
+        Cálculo Integral<br>
+        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
+      </div>
+      <div class="materia" data-nombre="Física I" data-creditos="3" data-prerrequisitos="Cálculo Diferencial">
+        Física I<br>
+        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
+      </div>
+      <div class="materia" data-nombre="Programación Básica" data-creditos="2">
+        Programación Básica<br>
+        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
+      </div>
+    </div>
+
+    <!-- Puedes seguir agregando hasta semestre 10 con el mismo formato -->
   </main>
 
-  <!-- Panel inferior: aparece SOLO cuando llegas al final de la página -->
-  <footer id="panel-final" aria-hidden="true">
-    <div class="panel-inner">
-      <div><strong>Créditos completados:</strong> <span id="creditosCompletados">0</span> / 168</div>
-      <div><strong>Avance:</strong> <span id="porcentajeAvance">0.0</span>%</div>
-      <div><strong>P.A.P.P.I.:</strong> <span id="pappi">0.0</span></div>
-      <div><strong>P.A.P.A.:</strong> <span id="papa">0.0</span></div>
-      <button id="btnReiniciar">🔄 Reiniciar progreso</button>
+  <footer id="panel-inferior">
+    <div class="info">
+      <p>Créditos completados: <span id="creditos">0</span></p>
+      <p>Avance: <span id="avance">0%</span></p>
+      <p>Pappi: <span id="pappi">0.0</span></p>
+      <p>Papa: <span id="papa">0.0</span></p>
     </div>
   </footer>
 
