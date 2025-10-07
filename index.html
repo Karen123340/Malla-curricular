@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malla Curricular Ingeniería Industrial</title>
-  <link rel="stylesheet" href="estilos.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Malla Curricular - Ingeniería Industrial</title>
+  <link rel="stylesheet" href="estilos.css" />
 </head>
 <body>
-  <h1>Malla Curricular Ingeniería Industrial</h1>
-  
-  <div id="contenedor"></div>
+  <header>
+    <h1>Malla Curricular Ingeniería Industrial</h1>
+  </header>
 
-  <div id="resumen">
-    <p><strong>Créditos completados:</strong> <span id="creditos">0 / 168</span></p>
-    <p><strong>Avance:</strong> <span id="avance">0%</span></p>
-    <p><strong>P.A.P.P.I.:</strong> <span id="pappi">0.00</span></p>
-    <p><strong>P.A.P.A.:</strong> <span id="papa">0.00</span></p>
-    <button id="reiniciar">
-      🔄 Reiniciar progreso
-    </button>
-  </div>
+  <main id="main">
+    <!-- Contenedor donde se renderizan las filas (un fila = un semestre) -->
+    <div id="malla"></div>
+  </main>
+
+  <!-- Panel inferior: aparece SOLO cuando llegas al final de la página -->
+  <footer id="panel-final" aria-hidden="true">
+    <div class="panel-inner">
+      <div><strong>Créditos completados:</strong> <span id="creditosCompletados">0</span> / 168</div>
+      <div><strong>Avance:</strong> <span id="porcentajeAvance">0.0</span>%</div>
+      <div><strong>P.A.P.P.I.:</strong> <span id="pappi">0.0</span></div>
+      <div><strong>P.A.P.A.:</strong> <span id="papa">0.0</span></div>
+      <button id="btnReiniciar">🔄 Reiniciar progreso</button>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
