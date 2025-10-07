@@ -206,7 +206,7 @@ function guardarEstado() {
   actualizarContadores();
 }
 
-// CORRECCIÓN: Estructura simplificada. El contenedor de semestre contendrá directamente los ramos.
+// Estructura simplificada: El div .semestre contendrá directamente los ramos.
 function crearContenedoresSemestre() {
   const malla = document.getElementById("malla-container");
   if (!malla) return; 
@@ -215,7 +215,6 @@ function crearContenedoresSemestre() {
     const columna = document.createElement("div");
     columna.className = "semestre";
     columna.id = `semestre${i}`;
-    // Se quita el div.contenedor-semestre
     columna.innerHTML = `<h2>Semestre ${i}</h2>`; 
     malla.appendChild(columna);
   }
@@ -232,7 +231,7 @@ function chequearBloqueo(nombre, datos, div) {
   }
 }
 
-// CORRECCIÓN: Inserción directa al contenedor del semestre.
+// Inserción directa al contenedor del semestre.
 function crearCaja(nombre, datos) {
   const div = document.createElement("div");
   const tipo = tipoAsignatura(nombre);
@@ -294,7 +293,7 @@ function reiniciarProgreso() {
   }
 }
 
-// Inicialización robusta
+// Inicialización robusta con DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
   crearContenedoresSemestre();
   Object.entries(ramos).forEach(([nombre, datos]) => {
