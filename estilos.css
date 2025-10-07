@@ -1,151 +1,147 @@
-/* === General === */
+/* === Estilo general === */
 body {
   font-family: "Poppins", sans-serif;
-  background: #fff6fa;
-  color: #333;
+  background-color: #fff8fb;
   margin: 0;
   padding: 0;
+  text-align: center;
+  color: #333;
 }
 
 h1 {
-  text-align: center;
-  color: #b4005f;
-  font-weight: 700;
-  margin-top: 40px;
+  margin: 30px 0;
+  color: #c83c8e;
+  font-size: 2em;
 }
 
-/* === Contenedor principal === */
+/* === Contenedor de la malla === */
 #contenedor {
   display: flex;
-  flex-wrap: nowrap;
   justify-content: center;
   align-items: flex-start;
+  flex-wrap: nowrap;
   gap: 20px;
-  margin: 40px auto;
-  max-width: 95%;
+  padding: 20px;
   overflow-x: auto;
-  padding-bottom: 30px;
 }
 
-/* === Columna de cada semestre === */
 .semestre {
-  flex: 0 0 200px;
-  border-radius: 25px;
-  padding: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
-}
-.semestre:hover {
-  transform: scale(1.02);
+  flex: 0 0 210px;
+  border-radius: 18px;
+  padding: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-/* === Título del semestre === */
+/* === Títulos de semestre === */
 .semestre h2 {
-  text-align: center;
-  font-size: 1.2em;
-  color: white;
+  margin: 8px 0 15px 0;
+  padding: 6px 0;
+  color: #fff;
   border-radius: 10px;
-  padding: 8px 0;
-  margin-bottom: 15px;
-  font-weight: 700;
+  font-size: 1.1em;
 }
 
-/* === Paleta de colores pastel brillante tipo UChile === */
-.sem1 h2 { background: #c47bff; }    /* violeta suave */
-.sem2 h2 { background: #9e91ff; }    /* azul lavanda */
-.sem3 h2 { background: #7cd1ff; }    /* celeste */
-.sem4 h2 { background: #7fffa6; }    /* verde menta */
-.sem5 h2 { background: #ffd37b; }    /* amarillo pastel */
-.sem6 h2 { background: #ffa87b; }    /* naranja coral */
-.sem7 h2 { background: #ff7b9e; }    /* rosado */
-.sem8 h2 { background: #ff7bf2; }    /* fucsia suave */
-.sem9 h2 { background: #ff7bf2; }    /* repetir color 8 */
-.sem10 h2 { background: #ff7bf2; }   /* repetir color 8 */
-
-/* === Fondo claro de cada columna === */
-.sem1 { background: #f8e8ff; }
-.sem2 { background: #ede9ff; }
-.sem3 { background: #e6f6ff; }
-.sem4 { background: #e7ffe8; }
-.sem5 { background: #fff6e0; }
-.sem6 { background: #ffefe6; }
-.sem7 { background: #ffe6eb; }
-.sem8 { background: #ffe6fa; }
-.sem9 { background: #ffe6fa; }
-.sem10 { background: #ffe6fa; }
+/* === Colores exactos de los semestres (tomados del ejemplo) === */
+.sem1 h2 { background-color: #d69ac4; }  /* Rosado claro */
+.sem2 h2 { background-color: #c694d1; }  /* Lila */
+.sem3 h2 { background-color: #a59ce0; }  /* Azul lavanda */
+.sem4 h2 { background-color: #e2a1c5; }  /* Rosa chicle */
+.sem5 h2 { background-color: #efb1b6; }  /* Rosa pálido */
+.sem6 h2 { background-color: #f4b7a5; }
+.sem7 h2 { background-color: #f5c59e; }
+.sem8 h2 { background-color: #f7d895; }
+.sem9 h2 { background-color: #f9e89c; }
+.sem10 h2 { background-color: #faefb2; }
 
 /* === Materias === */
 .materia {
-  background: white;
-  border-radius: 15px;
-  padding: 10px 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
+  background-color: #fdf6fb;
+  border: 1px solid #f1d8ea;
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.materia:hover {
+  transform: scale(1.03);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.materia strong {
+  display: block;
+  color: #5b285a;
+  margin-bottom: 4px;
+}
+
+/* === Select de notas === */
+.materia select {
+  width: 100%;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 3px;
+  font-size: 0.9em;
+}
+
+/* === Bloqueadas === */
+.bloqueada {
+  opacity: 0.4;
   position: relative;
 }
-.materia:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-}
 
-/* === Materia bloqueada === */
-.materia.bloqueada {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* === Tooltip de prerrequisitos pendientes === */
-.materia[data-tooltip]:hover::after {
+.bloqueada::after {
   content: attr(data-tooltip);
   position: absolute;
-  top: -8px;
-  left: 105%;
-  background: #333;
-  color: #fff;
-  padding: 6px 8px;
-  border-radius: 8px;
-  font-size: 0.75rem;
+  background: #c83c8e;
+  color: white;
+  font-size: 0.75em;
+  border-radius: 6px;
+  padding: 4px 8px;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: 0.2s;
+  pointer-events: none;
   white-space: nowrap;
-  z-index: 10;
 }
 
-/* === Menú desplegable de nota === */
-select {
-  width: 100%;
-  padding: 6px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: #f8f8f8;
+.bloqueada:hover::after {
+  opacity: 1;
 }
 
-/* === Recuadro superior de progreso === */
+/* === Sección de resumen al final === */
 #resumen {
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  padding: 20px 30px;
-  width: fit-content;
-  margin: 0 auto;
-  text-align: left;
+  margin-top: 40px;
+  padding: 20px;
+  background: #ffe8f3;
+  border-top: 3px solid #c83c8e;
+  border-radius: 20px 20px 0 0;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
-#resumen strong {
-  color: #b4005f;
+
+#resumen p {
+  margin: 6px 0;
+  font-size: 1em;
 }
-#resumen button {
-  background: #b4005f;
+
+#reiniciar {
+  margin-top: 10px;
+  background-color: #c83c8e;
   color: white;
   border: none;
-  border-radius: 10px;
-  padding: 10px 20px;
-  margin-top: 10px;
+  border-radius: 8px;
+  padding: 8px 14px;
   cursor: pointer;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  font-weight: bold;
+  transition: 0.2s;
 }
-#resumen button:hover {
-  background: #90004c;
+
+#reiniciar:hover {
+  background-color: #a82c74;
 }
