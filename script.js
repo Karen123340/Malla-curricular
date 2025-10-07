@@ -7,7 +7,7 @@ const tipos = {
     "Cálculo Integral", "Álgebra Lineal", "Taller de Invención y Creatividad",
     "Programación Orientada a Objetos", "Probabilidad Fundamental",
     "Ecuaciones Diferenciales", "Fundamentos de Electricidad y Magnetismo",
-    "Fundamentos de Mecánica"
+    "Fundamentos de Mecánica", "Matematicas Basicas"
   ],
   disciplinar: [
     "Taller de Herramientas y Problemas", "Economía General",
@@ -33,6 +33,10 @@ const tipos = {
 };
 
 const ramos = {
+     "Matematicas Basicas"
+       semestre: 1, creditos: 4, prerequisitos: [],
+    desbloquea: ["Cálculo Diferencial"]
+  },
       "Cálculo Diferencial": {
     semestre: 1, creditos: 4, prerequisitos: [],
     desbloquea: ["Álgebra Lineal", "Taller de Herramientas y Problemas", "Fundamentos de Mecánica", "Economía General", "Cálculo Integral"]
