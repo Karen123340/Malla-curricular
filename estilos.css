@@ -1,176 +1,87 @@
-:root {
-  --color-fundacion: #E1C6FF;
-  --color-disciplinar: #D0B0FF;
-  --color-libre: #E6D3FF;
-  --color-trabajo: #DCC6FF;
-  --color-bloqueado: #f0f0f0;
-  --color-aprobado: #b6ffcb;
-}
-
 body {
   font-family: Arial, sans-serif;
-  background-color: #FFFDFB;
+  background-color: #f5f5f5;
+  text-align: center;
   margin: 0;
   padding: 0;
-  text-align: center;
 }
 
 h1 {
-  margin-top: 20px;
-  font-size: 1.8em;
+  background-color: #0e4d92;
+  color: white;
+  margin: 0;
+  padding: 20px;
 }
 
-#malla-container {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+.resumen {
+  background: #ffffff;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.malla {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
   padding: 20px;
-  gap: 20px;
-  justify-content: flex-start;
 }
 
 .semestre {
-  background-color: #F9F4EF;
-  border: 1px solid #e0dcd8;
-  border-radius: 12px;
-  padding: 12px;
-  min-width: 220px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  background: #e9edf2;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .semestre h2 {
-  margin-top: 0;
-  font-size: 1.4em;
-  color: #4a4a4a;
-}
-
-.ramo {
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px 0;
-  font-weight: bold;
-  transition: background-color 0.3s;
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-}
-
-.fundacion {
-  background-color: var(--color-fundacion);
-}
-
-.disciplinar {
-  background-color: var(--color-disciplinar);
-}
-
-.libre {
-  background-color: var(--color-libre);
-}
-
-.trabajo {
-  background-color: var(--color-trabajo);
-}
-
-.bloqueado {
-  background-color: var(--color-bloqueado) !important;
-  color: #aaa;
-  text-decoration: none;
-  cursor: not-allowed;
-}
-
-.aprobado {
-  background-color: var(--color-aprobado) !important;
-  text-decoration: line-through;
-  opacity: 0.8;
-}
-
-#footer {
-  margin: 20px;
-}
-
-#botonReiniciar {
-  padding: 10px 20px;
-  font-size: 1em;
-  background-color: #ce93d8;
-  border: none;
-  border-radius: 6px;
+  background: #0e4d92;
   color: white;
-  cursor: pointer;
-}
-
-#botonReiniciar:hover {
-  background-color: #ab47bc;
-}
-
-#avance {
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-/* Añadimos un estilo más bonito para los campos de entrada */
-input[type="number"] {
-  margin-top: 10px;
-  padding: 8px;
-  font-size: 1.2em;
-  width: 120px; /* Ajustamos el tamaño para hacerlo más accesible */
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;  /* Fondo más suave */
-  transition: all 0.3s ease-in-out; /* Suavizamos la transición para los efectos */
-}
-
-input[type="number"]:focus {
-  outline: none;
-  border-color: #4a90e2;  /* Resalta el borde cuando se hace clic */
-  background-color: #e9f1fe; /* Fondo suave cuando está seleccionado */
-}
-
-input[type="number"]:hover {
-  border-color: #6ca6e0;  /* Cambio de color de borde cuando se pasa el ratón */
-}
-
-label {
-  font-weight: bold;
-  font-size: 1em;
-  margin-top: 5px;
-  display: block; /* Separa la etiqueta del campo de entrada */
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .ramo {
-  border-radius: 10px;
-  padding: 15px;
-  margin: 15px 0;
-  font-weight: bold;
-  transition: background-color 0.3s;
+  background: white;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 6px 0;
+  border: 2px solid #ccc;
+  transition: all 0.2s;
+}
+
+.ramo.aprobado {
+  background: #c8f7c5;
+  border-color: #4caf50;
+}
+
+.ramo.reprobado {
+  background: #ffbdbd;
+  border-color: #f44336;
+}
+
+.ramo.bloqueado {
+  background: #dddddd;
+  color: #777;
+  border-color: #aaa;
+}
+
+.nota {
+  width: 70px;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+button {
+  background-color: #0e4d92;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  background-color: #f9f9f9;  /* Fondo más claro */
-  text-align: left;
+  font-size: 14px;
 }
 
-.ramo:hover {
-  background-color: #f1f1f1;  /* Color más oscuro al pasar el mouse */
+button:hover {
+  background-color: #093463;
 }
-
-.ramo .nota {
-  width: 150px;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #d0d0d0;
-  background-color: #fff;
-  font-size: 1.1em;
-  transition: border-color 0.3s ease;
-}
-
-.ramo .nota:focus {
-  border-color: #ab47bc;
-}
-
-.ramo .nota:valid {
-  border-color: #00b359;  /* Verde cuando la nota es válida */
-}
-
-.ramo .nota:invalid {
-  border-color: #f44336;  /* Rojo cuando la nota es inválida */
-}
-
