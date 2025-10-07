@@ -4,63 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Malla Curricular Ingeniería Industrial</title>
-  <link rel="stylesheet" href="estilos.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+  <!-- Encabezado fijo -->
   <header>
     <h1>Malla Curricular Ingeniería Industrial</h1>
   </header>
 
-  <main id="malla">
-    <!-- Cada semestre es una columna vertical -->
-    <div class="semestre" id="sem1">
-      <h2>Semestre 1</h2>
-      <div class="materia" data-nombre="Matemáticas Básicas" data-creditos="0">
-        Matemáticas Básicas<br>
-        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
-      </div>
-      <div class="materia" data-nombre="Cálculo Diferencial" data-creditos="3">
-        Cálculo Diferencial<br>
-        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
-      </div>
-      <div class="materia" data-nombre="Álgebra Lineal" data-creditos="3">
-        Álgebra Lineal<br>
-        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
-      </div>
-      <div class="materia" data-nombre="Química" data-creditos="2">
-        Química<br>
-        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
-      </div>
-    </div>
+  <!-- Contenedor principal -->
+  <main id="malla-container"></main>
 
-    <div class="semestre" id="sem2">
-      <h2>Semestre 2</h2>
-      <div class="materia" data-nombre="Cálculo Integral" data-creditos="3" data-prerrequisitos="Cálculo Diferencial">
-        Cálculo Integral<br>
-        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
-      </div>
-      <div class="materia" data-nombre="Física I" data-creditos="3" data-prerrequisitos="Cálculo Diferencial">
-        Física I<br>
-        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
-      </div>
-      <div class="materia" data-nombre="Programación Básica" data-creditos="2">
-        Programación Básica<br>
-        <input type="number" step="0.1" min="1.0" max="5.0" placeholder="Nota">
-      </div>
-    </div>
-
-    <!-- Puedes seguir agregando hasta semestre 10 con el mismo formato -->
-  </main>
-
+  <!-- Panel inferior (solo visible al final del scroll) -->
   <footer id="panel-inferior">
-    <div class="info">
-      <p>Créditos completados: <span id="creditos">0</span></p>
-      <p>Avance: <span id="avance">0%</span></p>
-      <p>Pappi: <span id="pappi">0.0</span></p>
-      <p>Papa: <span id="papa">0.0</span></p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <div class="panel-content">
+      <p><strong>Créditos completados:</strong> <span id="creditos">0</span> / 168</p>
+      <p><strong>Avance:</strong> <span id="avance">0%</span></p>
+      <p><strong>Pappi:</strong> <span id="pappi">0.0</span></p>
+      <p><strong>Papa:</strong> <span id="papa">0.0</span></p>
