@@ -106,9 +106,71 @@ h1 {
   font-weight: bold;
 }
 
+/* Añadimos un estilo más bonito para los campos de entrada */
 input[type="number"] {
-  margin-top: 5px;
-  padding: 5px;
-  font-size: 1em;
-  width: 80px;
+  margin-top: 10px;
+  padding: 8px;
+  font-size: 1.2em;
+  width: 120px; /* Ajustamos el tamaño para hacerlo más accesible */
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;  /* Fondo más suave */
+  transition: all 0.3s ease-in-out; /* Suavizamos la transición para los efectos */
 }
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #4a90e2;  /* Resalta el borde cuando se hace clic */
+  background-color: #e9f1fe; /* Fondo suave cuando está seleccionado */
+}
+
+input[type="number"]:hover {
+  border-color: #6ca6e0;  /* Cambio de color de borde cuando se pasa el ratón */
+}
+
+label {
+  font-weight: bold;
+  font-size: 1em;
+  margin-top: 5px;
+  display: block; /* Separa la etiqueta del campo de entrada */
+}
+
+.ramo {
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  background-color: #f9f9f9;  /* Fondo más claro */
+  text-align: left;
+}
+
+.ramo:hover {
+  background-color: #f1f1f1;  /* Color más oscuro al pasar el mouse */
+}
+
+.ramo .nota {
+  width: 150px;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #d0d0d0;
+  background-color: #fff;
+  font-size: 1.1em;
+  transition: border-color 0.3s ease;
+}
+
+.ramo .nota:focus {
+  border-color: #ab47bc;
+}
+
+.ramo .nota:valid {
+  border-color: #00b359;  /* Verde cuando la nota es válida */
+}
+
+.ramo .nota:invalid {
+  border-color: #f44336;  /* Rojo cuando la nota es inválida */
+}
+
