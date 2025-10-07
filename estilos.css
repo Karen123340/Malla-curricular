@@ -1,133 +1,114 @@
-body {
-  font-family: "Poppins", sans-serif;
-  background-color: #fafafa;
-  color: #333;
-  text-align: center;
-  margin: 0;
-  padding: 20px;
+:root{
+  --bg: #fffafc;
+  --card: #fff;
+  --accent: #b60057;
+  --text: #222;
+  --shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
 
-h1 {
-  color: #b60057;
-  font-weight: 700;
-  margin-bottom: 30px;
+/* reset y cuerpo */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--text);
+  text-align:center;
+  padding:20px;
 }
 
-/* Caja de información */
-.info-box {
-  background: linear-gradient(135deg, #ffffff, #fff5f8);
-  border-radius: 16px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  display: inline-block;
-  padding: 15px 25px;
-  margin-bottom: 25px;
-  text-align: left;
-  transition: 0.3s ease;
+/* header */
+header{margin-bottom:12px}
+h1{ margin:0; font-size:30px; color:var(--accent); font-weight:700; }
+
+/* info box (estético, redondeado) */
+.info-box{
+  display:inline-block;
+  text-align:left;
+  background: linear-gradient(180deg,#fff,#fff5f8);
+  border-radius:14px;
+  padding:18px 22px;
+  box-shadow:var(--shadow);
+  margin-bottom:20px;
+}
+.info-box div{ margin:6px 0; font-weight:600; }
+#botonReiniciar{
+  margin-top:8px;
+  padding:8px 12px;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+#botonReiniciar:hover{ filter:brightness(.95); }
+
+/* layout malla */
+#malla-container{
+  display:flex;
+  gap:16px;
+  padding:18px;
+  overflow-x:auto;
+  justify-content:flex-start;
+  align-items:flex-start;
 }
 
-.info-box:hover {
-  transform: scale(1.02);
+/* columna semestre */
+.semestre{
+  min-width:220px;
+  width:220px;
+  border-radius:16px;
+  padding:14px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.06);
+  flex:0 0 auto;
+}
+.semestre h2{
+  margin:0 0 10px 0;
+  padding:8px;
+  border-radius:10px;
+  color:#fff;
+  font-size:1rem;
+  font-weight:700;
 }
 
-.info-box div {
-  margin: 4px 0;
+/* colores por semestre (puedes ajustar) */
+.sem1 { background:#f3e5f5; }    .sem1 h2{ background:#ab47bc; }
+.sem2 { background:#e8eaf6; }    .sem2 h2{ background:#5c6bc0; }
+.sem3 { background:#e1f5fe; }    .sem3 h2{ background:#039be5; }
+.sem4 { background:#e8f5e9; }    .sem4 h2{ background:#43a047; }
+.sem5 { background:#fff3e0; }    .sem5 h2{ background:#fb8c00; }
+.sem6 { background:#fce4ec; }    .sem6 h2{ background:#ec407a; }
+.sem7 { background:#ede7f6; }    .sem7 h2{ background:#7e57c2; }
+.sem8 { background:#f3e5f5; }    .sem8 h2{ background:#8e24aa; }
+.sem9 { background:#fbe9e7; }    .sem9 h2{ background:#f4511e; }
+.sem10{ background:#f9fbe7; }    .sem10 h2{ background:#c0ca33; }
+
+/* tarjeta ramo */
+.ramo{
+  background:#fff;
+  border-radius:12px;
+  padding:10px;
+  margin:8px 0;
+  text-align:left;
+  font-weight:600;
+  transition:transform .12s ease,box-shadow .12s ease,opacity .12s;
+}
+.ramo:hover{ transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,0.08); }
+
+/* estado */
+.ramo.bloqueado{ opacity:0.45; pointer-events:none; }
+.ramo.aprobado{ text-decoration:line-through; opacity:0.8; }
+
+/* nota */
+input.nota{
+  margin-top:8px;
+  width:100%;
+  padding:8px;
+  border-radius:8px;
+  border:1px solid #e0d7e8;
+  text-align:center;
+  font-size:14px;
 }
 
-#reiniciar {
-  background-color: #b60057;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 6px 12px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-#reiniciar:hover {
-  background-color: #a0004b;
-}
-
-/* Contenedor general */
-.malla {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  padding: 20px;
-}
-
-/* Estilo por semestre */
-.semestre {
-  border-radius: 20px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  width: 220px;
-  min-width: 220px;
-  padding: 15px;
-}
-
-.semestre h2 {
-  color: white;
-  border-radius: 12px;
-  padding: 8px;
-  font-size: 1.1rem;
-  margin-bottom: 10px;
-}
-
-/* Colores de semestres */
-.sem1 { background-color: #f3e5f5; }
-.sem1 h2 { background-color: #ab47bc; }
-
-.sem2 { background-color: #e8eaf6; }
-.sem2 h2 { background-color: #5c6bc0; }
-
-.sem3 { background-color: #e1f5fe; }
-.sem3 h2 { background-color: #039be5; }
-
-.sem4 { background-color: #e8f5e9; }
-.sem4 h2 { background-color: #43a047; }
-
-.sem5 { background-color: #fff3e0; }
-.sem5 h2 { background-color: #fb8c00; }
-
-.sem6 { background-color: #fce4ec; }
-.sem6 h2 { background-color: #ec407a; }
-
-.sem7 { background-color: #ede7f6; }
-.sem7 h2 { background-color: #7e57c2; }
-
-.sem8 { background-color: #f3e5f5; }
-.sem8 h2 { background-color: #8e24aa; }
-
-.sem9 { background-color: #fbe9e7; }
-.sem9 h2 { background-color: #f4511e; }
-
-.sem10 { background-color: #f9fbe7; }
-.sem10 h2 { background-color: #c0ca33; }
-
-/* Tarjetas de ramos */
-.ramo {
-  border-radius: 15px;
-  margin: 8px 0;
-  padding: 8px;
-  background-color: white;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.ramo:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.ramo.bloqueado {
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-input[type="number"] {
-  width: 80%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 3px;
-  text-align: center;
-}
+/* tooltip sencillo al pasar (title) */
+.ramo[title]{ cursor:help; }
