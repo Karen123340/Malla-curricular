@@ -222,8 +222,8 @@ function crearCaja(nombre, datos) {
   div.className = `ramo ${tipo}`;
   div.id = nombre;
   div.innerHTML = `<strong>${nombre}</strong><br><span>${datos.creditos} créditos</span><br>
-                  <label for="nota${nombre}">Nota: </label>
-                  <input type="number" id="nota${nombre}" class="nota" min="1" max="7" step="0.1">`;
+                  <label for="nota${nombre}">Nota (1-7): </label>
+                  <input type="number" id="nota${nombre}" class="nota" min="1" max="7" step="0.1" placeholder="Ingresa la nota">`;
 
   const container = document.querySelector(`#semestre${datos.semestre} .contenedor-semestre`);
   if (container) container.appendChild(div);
@@ -234,6 +234,8 @@ function crearCaja(nombre, datos) {
   inputNota.addEventListener("input", function() {
     calcularPromedios();
   });
+}
+
 }
 
 function calcularPromedios() {
