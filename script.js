@@ -236,8 +236,6 @@ function crearCaja(nombre, datos) {
   });
 }
 
-}
-
 function calcularPromedios() {
   let totalCreditosSemestrales = 0;
   let sumaPonderadaSemestral = 0;
