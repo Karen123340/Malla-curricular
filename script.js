@@ -1,8 +1,6 @@
-// script.js actualizado con tipos de asignatura y clases CSS por color
-
 const estadoRamos = JSON.parse(localStorage.getItem("estadoRamos")) || {};
 
-// Clasificación por tipo para colores
+// Clasificación de tipos
 const tipos = {
   fundacion: [
     "Cálculo Diferencial", "Sociología especial: industrial y del trabajo",
@@ -27,7 +25,6 @@ const tipos = {
     "Gestión Tecnológica", "Gerencia de Recursos Humanos",
     "Taller Diseño Plantas"
   ],
-  optativa: [],
   libre: [
     "Libre elección 1", "Libre elección 2", "Libre elección 3", "Libre elección 4",
     "Libre elección 5", "Libre elección 6", "Libre elección 7", "Libre elección 8",
@@ -36,6 +33,7 @@ const tipos = {
   trabajo: ["Trabajo de grado"]
 };
 
+// Objeto con las asignaturas
 const ramos = {
       "Cálculo Diferencial": {
     semestre: 1, creditos: 4, prerequisitos: [],
@@ -197,7 +195,7 @@ function tipoAsignatura(nombre) {
   for (const [tipo, lista] of Object.entries(tipos)) {
     if (lista.includes(nombre)) return tipo;
   }
-  return "libre"; // por defecto
+  return "libre";  // Si no se encuentra, asigna el tipo "libre"
 }
 
 function guardarEstado() {
@@ -210,8 +208,8 @@ function crearContenedoresSemestre() {
   for (let i = 1; i <= 10; i++) {
     const columna = document.createElement("div");
     columna.className = "semestre";
-    columna.id = semestre${i};
-    columna.innerHTML = <h2>Semestre ${i}</h2><div class="contenedor-semestre"></div>;
+    columna.id = `semestre${i}`;
+    columna.innerHTML = `<h2>Semestre ${i}</h2><div class="contenedor-semestre"></div>`;
     malla.appendChild(columna);
   }
 }
@@ -219,11 +217,11 @@ function crearContenedoresSemestre() {
 function crearCaja(nombre, datos) {
   const div = document.createElement("div");
   const tipo = tipoAsignatura(nombre);
-  div.className = ramo bloqueado ${tipo};
+  div.className = `ramo ${tipo}`;
   div.id = nombre;
-  div.innerHTML = <strong>${nombre}</strong><br><span>${datos.creditos} créditos</span>;
+  div.innerHTML = `<strong>${nombre}</strong><br><span>${datos.creditos} créditos</span>`;
 
-  const container = document.querySelector(#semestre${datos.semestre} .contenedor-semestre);
+  const container = document.querySelector(`#semestre${datos.semestre} .contenedor-semestre`);
   if (container) container.appendChild(div);
 
   if (!estadoRamos.hasOwnProperty(nombre)) estadoRamos[nombre] = false;
