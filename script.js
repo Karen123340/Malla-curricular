@@ -1,4 +1,4 @@
-// ... (código anterior de script.js)
+ // ... (código anterior de script.js)
 
 function crearCaja(nombre, datos) {
   const div = document.createElement("div");
