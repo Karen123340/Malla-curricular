@@ -1,33 +1,209 @@
-// Simulación de los ramos y sus créditos
-const ramos = {
-  "Cálculo Diferencial": { creditos: 4, semestre: 1 },
-  "Sociología especial: industrial y del trabajo": { creditos: 3, semestre: 1 },
-  "Introducción a la Ingeniería Industrial": { creditos: 2, semestre: 1 },
-  "Programación de Computadores": { creditos: 3, semestre: 1 },
-  "Cálculo Integral": { creditos: 4, semestre: 2 },
-  "Álgebra Lineal": { creditos: 3, semestre: 2 },
-  "Taller de Invención y Creatividad": { creditos: 2, semestre: 2 },
-  "Programación Orientada a Objetos": { creditos: 3, semestre: 2 },
-  "Probabilidad Fundamental": { creditos: 3, semestre: 3 },
-  "Ecuaciones Diferenciales": { creditos: 4, semestre: 3 },
-  "Fundamentos de Electricidad y Magnetismo": { creditos: 3, semestre: 3 },
-  "Fundamentos de Mecánica": { creditos: 3, semestre: 3 },
-  "Matematicas Basicas": { creditos: 3, semestre: 1 },
-  "Trabajo de grado": { creditos: 10, semestre: 10 }
-};
-
-// Recupera el progreso guardado (si existe)
+// Carga estado previo
 const estadoRamos = JSON.parse(localStorage.getItem("estadoRamos")) || {};
 
-// Clasifica el tipo de asignatura
+// ----- CLASIFICACIÓN -----
+const tipos = {
+  fundacion: [
+    "Cálculo Diferencial", "Sociología especial: industrial y del trabajo",
+    "Introducción a la Ingeniería Industrial", "Programación de Computadores",
+    "Cálculo Integral", "Álgebra Lineal", "Taller de Invención y Creatividad",
+    "Programación Orientada a Objetos", "Probabilidad Fundamental",
+    "Ecuaciones Diferenciales", "Fundamentos de Electricidad y Magnetismo",
+    "Fundamentos de Mecánica"
+  ],
+  disciplinar: [
+    "Taller de Herramientas y Problemas", "Economía General",
+    "Taller Ciencia y Tecnología Materiales", "Sistema de Costos",
+    "Gestión Empresarial", "Cálculo en Varias Variables", "Modelos y Simulación",
+    "Ingeniería Económica y Análisis de Riesgo", "Optimización",
+    "Taller de Procesos Químicos y Biotecnológicos",
+    "Taller de Procesos Metalmecánicos", "Inferencia Estadística Fundamental",
+    "Modelos Estocásticos", "Gerencia y Gestión de Proyectos", "Finanzas",
+    "Taller Ergonomía e Ingeniería de Métodos", "Control y Gestión Calidad",
+    "Taller Simulación Procesos", "Sistemas de Información",
+    "Seguridad Industrial", "Taller Ingeniería de Producción",
+    "Taller Metodología Investigación", "Logística",
+    "Gestión Tecnológica", "Gerencia de Recursos Humanos",
+    "Taller Diseño Plantas"
+  ],
+  libre: [
+    "Libre elección 1","Libre elección 2","Libre elección 3","Libre elección 4",
+    "Libre elección 5","Libre elección 6","Libre elección 7","Libre elección 8","Libre elección 9"
+  ],
+  trabajo: ["Trabajo de grado"]
+};
+
+// ----- DATOS DE RAMOS (con prerrequisitos) -----
+const ramos = {
+      "Cálculo Diferencial": {
+    semestre: 1, creditos: 4, prerequisitos: [],
+    desbloquea: ["Álgebra Lineal", "Taller de Herramientas y Problemas", "Fundamentos de Mecánica", "Economía General", "Cálculo Integral"]
+  },
+  "Sociología especial: industrial y del trabajo": {
+    semestre: 1, creditos: 3, prerequisitos: []
+  },
+  "Introducción a la Ingeniería Industrial": {
+    semestre: 1, creditos: 3, prerequisitos: [],
+    desbloquea: ["Taller de Herramientas y Problemas", "Economía General", "Taller de Invención y Creatividad"]
+  },
+  "Programación de Computadores": {
+    semestre: 1, creditos: 3, prerequisitos: [],
+    desbloquea: ["Programación Orientada a Objetos"]
+  },
+  "Cálculo Integral": {
+    semestre: 2, creditos: 4, prerequisitos: ["Cálculo Diferencial"],
+    desbloquea: ["Cálculo en Varias Variables", "Fundamentos de Electricidad y Magnetismo", "Ecuaciones Diferenciales", "Probabilidad Fundamental"]
+  },
+  "Álgebra Lineal": {
+    semestre: 2, creditos: 4, prerequisitos: ["Cálculo Diferencial"],
+    desbloquea: ["Ecuaciones Diferenciales", "Optimización"]
+  },
+  "Taller de Invención y Creatividad": {
+    semestre: 2, creditos: 3, prerequisitos: ["Introducción a la Ingeniería Industrial"],
+    desbloquea: ["Gestión Empresarial"]
+  },
+  "Programación Orientada a Objetos": {
+    semestre: 2, creditos: 3, prerequisitos: ["Programación de Computadores"],
+    desbloquea: ["Taller de Herramientas y Problemas"]
+  },
+  "Libre elección 1": {
+    semestre: 2, creditos: 3, prerequisitos: []
+  },
+  "Cálculo en Varias Variables": {
+    semestre: 3, creditos: 4, prerequisitos: ["Cálculo Integral"],
+    desbloquea: ["Ingeniería Económica y Análisis de Riesgo", "Optimización", "Modelos y Simulación"]
+  },
+  "Fundamentos de Mecánica": {
+    semestre: 3, creditos: 4, prerequisitos: ["Cálculo Diferencial"],
+    desbloquea: ["Taller Ciencia y Tecnología Materiales", "Fundamentos de Electricidad y Magnetismo"]
+  },
+  "Economía General": {
+    semestre: 3, creditos: 3, prerequisitos: ["Cálculo Diferencial", "Introducción a la Ingeniería Industrial"],
+    desbloquea: ["Gestión Empresarial", "Sistema de Costos"]
+  },
+  "Taller de Herramientas y Problemas": {
+    semestre: 3, creditos: 3, prerequisitos: ["Cálculo Diferencial", "Introducción a la Ingeniería Industrial", "Programación Orientada a Objetos"],
+    desbloquea: ["Sistema de Costos", "Modelos y Simulación"]
+  },
+  "Probabilidad Fundamental": {
+    semestre: 3, creditos: 4, prerequisitos: ["Cálculo Integral"],
+    desbloquea: ["Modelos y Simulación", "Inferencia Estadística Fundamental"]
+  },
+  "Ecuaciones Diferenciales": {
+    semestre: 4, creditos: 4, prerequisitos: ["Álgebra Lineal", "Cálculo Integral"],
+    desbloquea: ["Modelos y Simulación"]
+  },
+  "Fundamentos de Electricidad y Magnetismo": {
+    semestre: 4, creditos: 4, prerequisitos: ["Cálculo Integral"],
+    desbloquea: ["Seguridad Industrial"]
+  },
+  "Sistema de Costos": {
+    semestre: 4, creditos: 4, prerequisitos: ["Taller de Herramientas y Problemas"],
+    desbloquea: ["Ingeniería Económica y Análisis de Riesgo"]
+  },
+  "Gestión Empresarial": {
+    semestre: 4, creditos: 3, prerequisitos: ["Taller de Invención y Creatividad", "Economía General"]
+  },
+  "Taller Ciencia y Tecnología Materiales": {
+    semestre: 4, creditos: 4, prerequisitos: ["Fundamentos de Mecánica"],
+    desbloquea: ["Taller de Procesos Químicos y Biotecnológicos", "Taller de Procesos Metalmecánicos"]
+  },
+  "Modelos y Simulación": {
+    semestre: 5, creditos: 3, prerequisitos: ["Cálculo en Varias Variables", "Taller de Herramientas y Problemas", "Ecuaciones Diferenciales", "Probabilidad Fundamental"],
+    desbloquea: ["Modelos Estocásticos"]
+  },
+  "Optimización": {
+    semestre: 5, creditos: 3, prerequisitos: ["Álgebra Lineal", "Cálculo en Varias Variables"],
+    desbloquea: ["Taller Ergonomía e Ingeniería de Métodos", "Modelos Estocásticos"]
+  },
+  "Ingeniería Económica y Análisis de Riesgo": {
+    semestre: 5, creditos: 3, prerequisitos: ["Sistema de Costos", "Cálculo en Varias Variables"],
+    desbloquea: ["Finanzas", "Gerencia y Gestión de Proyectos"]
+  },
+  "Taller de Procesos Químicos y Biotecnológicos": {
+    semestre: 5, creditos: 3, prerequisitos: ["Taller Ciencia y Tecnología Materiales"]
+  },
+  "Taller de Procesos Metalmecánicos": {
+    semestre: 5, creditos: 3, prerequisitos: ["Taller Ciencia y Tecnología Materiales"],
+    desbloquea: ["Taller Ergonomía e Ingeniería de Métodos"]
+  },
+  "Inferencia Estadística Fundamental": {
+    semestre: 5, creditos: 4, prerequisitos: ["Probabilidad Fundamental"],
+    desbloquea: ["Control y Gestión Calidad", "Modelos Estocásticos", "Taller Metodología Investigación"]
+  },
+  "Modelos Estocásticos": {
+    semestre: 6, creditos: 3, prerequisitos: ["Modelos y Simulación", "Optimización", "Inferencia Estadística Fundamental"],
+    desbloquea: ["Taller Simulación Procesos", "Taller Ingeniería de Producción"]
+  },
+  "Gerencia y Gestión de Proyectos": {
+    semestre: 6, creditos: 3, prerequisitos: ["Ingeniería Económica y Análisis de Riesgo"],
+    desbloquea: ["Sistemas de Información"]
+  },
+  "Finanzas": {
+    semestre: 6, creditos: 3, prerequisitos: ["Ingeniería Económica y Análisis de Riesgo"]
+  },
+  "Taller Ergonomía e Ingeniería de Métodos": {
+    semestre: 6, creditos: 4, prerequisitos: ["Optimización", "Taller de Procesos Metalmecánicos"],
+    desbloquea: ["Taller Ingeniería de Producción"]
+  },
+  "Control y Gestión Calidad": {
+    semestre: 6, creditos: 3, prerequisitos: ["Inferencia Estadística Fundamental"]
+  },
+  "Taller Simulación Procesos": {
+    semestre: 7, creditos: 3, prerequisitos: ["Modelos Estocásticos"],
+    desbloquea: ["Logística"]
+  },
+  "Sistemas de Información": {
+    semestre: 7, creditos: 3, prerequisitos: ["Gerencia y Gestión de Proyectos"],
+    desbloquea: ["Taller Diseño Plantas", "Gestión Tecnológica"]
+  },
+  "Seguridad Industrial": {
+    semestre: 7, creditos: 3, prerequisitos: ["Fundamentos de Electricidad y Magnetismo"],
+    desbloquea: ["Taller Diseño Plantas", "Gerencia de Recursos Humanos"]
+  },
+  "Taller Ingeniería de Producción": {
+    semestre: 7, creditos: 4, prerequisitos: ["Taller Ergonomía e Ingeniería de Métodos", "Modelos Estocásticos"],
+    desbloquea: ["Taller Diseño Plantas"]
+  },
+  "Taller Metodología Investigación": {
+    semestre: 7, creditos: 3, prerequisitos: ["Taller de Invención y Creatividad", "Inferencia Estadística Fundamental"]
+  },
+  "Logística": {
+    semestre: 8, creditos: 3, prerequisitos: ["Taller Simulación Procesos"]
+  },
+  "Gestión Tecnológica": {
+    semestre: 8, creditos: 3, prerequisitos: ["Sistemas de Información"]
+  },
+  "Gerencia de Recursos Humanos": {
+    semestre: 8, creditos: 3, prerequisitos: ["Seguridad Industrial"]
+  },
+  "Taller Diseño Plantas": {
+    semestre: 8, creditos: 4, prerequisitos: ["Taller Ingeniería de Producción", "Seguridad Industrial", "Sistemas de Información"]
+  },
+  "Libre elección 2": { semestre: 8, creditos: 4, prerequisitos: [] },
+  "Libre elección 3": { semestre: 9, creditos: 4, prerequisitos: [] },
+  "Libre elección 4": { semestre: 9, creditos: 4, prerequisitos: [] },
+  "Libre elección 5": { semestre: 9, creditos: 4, prerequisitos: [] },
+  "Libre elección 6": { semestre: 9, creditos: 4, prerequisitos: [] },
+  "Libre elección 7": { semestre: 10, creditos: 4, prerequisitos: [] },
+  "Libre elección 8": { semestre: 10, creditos: 4, prerequisitos: [] },
+  "Libre elección 9": { semestre: 10, creditos: 3, prerequisitos: [] },
+  "Trabajo de grado": { semestre: 10, creditos: 6, prerequisitos: [] }
+};
+
+// ----- FUNCIONES -----
 function tipoAsignatura(nombre) {
-  if (nombre.includes("Taller")) return "trabajo";
-  if (nombre.includes("Libre")) return "libre";
-  if (nombre.includes("Cálculo") || nombre.includes("Matem")) return "fundacion";
-  return "disciplinar";
+  for (const [tipo, lista] of Object.entries(tipos)) {
+    if (lista.includes(nombre)) return tipo;
+  }
+  return "libre";
 }
 
-// Crea las columnas por semestre
+function guardarEstado() {
+  localStorage.setItem("estadoRamos", JSON.stringify(estadoRamos));
+  calcularPromedios();
+}
+
 function crearContenedoresSemestre() {
   const malla = document.getElementById("malla-container");
   for (let i = 1; i <= 10; i++) {
@@ -39,86 +215,83 @@ function crearContenedoresSemestre() {
   }
 }
 
-// Crea cada materia
 function crearCaja(nombre, datos) {
   const div = document.createElement("div");
   const tipo = tipoAsignatura(nombre);
-  div.className = `ramo ${tipo}`;
+  div.className = `ramo ${tipo} bloqueado`;
   div.id = nombre;
+
   const notaGuardada = estadoRamos[nombre]?.nota || "";
 
   div.innerHTML = `
     <strong>${nombre}</strong><br>
     <span>${datos.creditos} créditos</span><br>
-    <label for="nota${nombre}">Nota (1–5):</label>
-    <input type="number" id="nota${nombre}" class="nota" min="1" max="5" step="0.1" value="${notaGuardada}" placeholder="Ej: 3.5">
+    <small>Prerreq: ${datos.prerequisitos.join(", ") || "Ninguno"}</small><br>
+    <label>Nota:</label>
+    <input type="number" class="nota" min="1" max="5" step="0.1" value="${notaGuardada}" placeholder="3.5">
   `;
 
   const container = document.querySelector(`#semestre${datos.semestre} .contenedor-semestre`);
   if (container) container.appendChild(div);
 
-  const inputNota = div.querySelector("input");
+  // Activar si no tiene prerequisitos
+  if (datos.prerequisitos.length === 0) div.classList.remove("bloqueado");
+
+  const inputNota = div.querySelector(".nota");
   inputNota.addEventListener("input", () => {
-    estadoRamos[nombre] = { nota: inputNota.value };
-    localStorage.setItem("estadoRamos", JSON.stringify(estadoRamos));
-    calcularPromedios();
+    const nota = parseFloat(inputNota.value);
+    if (!estadoRamos[nombre]) estadoRamos[nombre] = {};
+    estadoRamos[nombre].nota = nota;
+
+    if (nota >= 3.0) {
+      div.classList.add("aprobado");
+      div.classList.remove("reprobado", "bloqueado");
+      // Desbloquear asignaturas dependientes
+      for (const [dest, info] of Object.entries(ramos)) {
+        if (info.prerequisitos.every(pre => estadoRamos[pre]?.nota >= 3.0)) {
+          document.getElementById(dest)?.classList.remove("bloqueado");
+        }
+      }
+    } else if (nota < 3.0) {
+      div.classList.add("reprobado");
+      div.classList.remove("aprobado");
+    } else {
+      div.classList.remove("aprobado", "reprobado");
+    }
+
+    guardarEstado();
   });
 }
 
-// Calcula P.A.P.A., P.A.P.P.I. y créditos aprobados
 function calcularPromedios() {
-  let totalCreditos = 0;
-  let sumaPonderada = 0;
-  let creditosAprobados = 0;
-
-  const notas = document.querySelectorAll(".nota");
-
-  notas.forEach(input => {
-    const nota = parseFloat(input.value);
-    const ramo = input.closest(".ramo");
-    const nombre = ramo.querySelector("strong").textContent;
-    const creditos = ramos[nombre]?.creditos || 0;
-
-    if (!isNaN(nota) && nota >= 1 && nota <= 5) {
-      totalCreditos += creditos;
-      sumaPonderada += nota * creditos;
-
-      if (nota >= 3.0) {
-        ramo.classList.add("aprobado");
-        ramo.classList.remove("reprobado");
-        creditosAprobados += creditos;
-      } else {
-        ramo.classList.add("reprobado");
-        ramo.classList.remove("aprobado");
-      }
-    } else {
-      ramo.classList.remove("aprobado", "reprobado");
+  let totalCred = 0, suma = 0, aprob = 0;
+  for (const [nombre, info] of Object.entries(estadoRamos)) {
+    const nota = parseFloat(info.nota);
+    const cred = ramos[nombre]?.creditos || 0;
+    if (!isNaN(nota)) {
+      totalCred += cred;
+      suma += nota * cred;
+      if (nota >= 3.0) aprob += cred;
     }
-  });
-
-  const promedio = totalCreditos > 0 ? (sumaPonderada / totalCreditos).toFixed(1) : "0.0";
-  const porcentaje = ((creditosAprobados / 168) * 100).toFixed(1);
-
+  }
+  const promedio = totalCred ? (suma / totalCred).toFixed(1) : "0.0";
+  const porc = ((aprob / 168) * 100).toFixed(1);
   document.getElementById("papa").textContent = `P.A.P.A.: ${promedio}`;
   document.getElementById("pappi").textContent = `P.A.P.P.I.: ${promedio}`;
-  document.getElementById("creditosCompletados").textContent = creditosAprobados;
-  document.getElementById("porcentajeAvance").textContent = porcentaje;
+  document.getElementById("creditosCompletados").textContent = aprob;
+  document.getElementById("porcentajeAvance").textContent = porc;
 }
 
-// Botón de reinicio total
 function reiniciarProgreso() {
   if (confirm("¿Deseas reiniciar todo tu progreso?")) {
     localStorage.clear();
-    document.querySelectorAll(".nota").forEach(n => (n.value = ""));
-    document.querySelectorAll(".ramo").forEach(r => r.classList.remove("aprobado", "reprobado"));
-    calcularPromedios();
+    location.reload();
   }
 }
 
-// Inicialización
 window.onload = () => {
   crearContenedoresSemestre();
   Object.entries(ramos).forEach(([nombre, datos]) => crearCaja(nombre, datos));
-  document.getElementById("botonReiniciar").addEventListener("click", reiniciarProgreso);
   calcularPromedios();
+  document.getElementById("botonReiniciar").addEventListener("click", reiniciarProgreso);
 };
