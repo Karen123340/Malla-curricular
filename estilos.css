@@ -5,7 +5,7 @@
   --color-trabajo: #DCC6FF;        /* Lila claro */
   --color-bloqueado: #f0f0f0;
   --color-aprobado: #b6ffcb;       /* Verde menta claro */
-}  
+} 
 
 body {
   font-family: Arial, sans-serif;
@@ -20,8 +20,6 @@ h1 {
   font-size: 1.8em;
 }
 
-/* ... (reglas anteriores) ... */
-
 #malla-container {
   display: flex;
   flex-wrap: nowrap;
@@ -32,11 +30,10 @@ h1 {
 }
 
 .semestre {
-  /* <<< ASEGÚRATE DE INCLUIR ESTAS DOS LÍNEAS >>> */
+  /* ESTA ES LA CLAVE PARA QUE LOS RAMOS SE MUESTREN COMO BLOQUES */
   display: flex;
   flex-direction: column; 
-  /* <<< FIN DE LAS LÍNEAS CLAVE >>> */
-  
+
   background-color: #F9F4EF; 
   border: 1px solid #e0dcd8;
   border-radius: 12px;
@@ -47,7 +44,7 @@ h1 {
 
 .semestre h2 {
   margin-top: 0;
-  margin-bottom: 10px; /* Nuevo */
+  margin-bottom: 10px;
   font-size: 1.4em;
   color: #4a4a4a;
 }
@@ -62,7 +59,6 @@ h1 {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
-/* ... (resto de reglas de tipos, aprobado, bloqueado) ... */
 /* Tipos de ramos */
 .fundacion {
   background-color: var(--color-fundacion);
