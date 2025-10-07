@@ -8,7 +8,7 @@ const tipos = {
     "Cálculo Diferencial", "Sociología especial: industrial y del trabajo",
     "Introducción a la Ingeniería Industrial", "Programación de Computadores",
     "Cálculo Integral", "Álgebra Lineal", "Taller de Invención y Creatividad",
-    "Programación Orientada a Objetos", "Probabilidad Fundamental",
+    "Programación Orientada a Objetos", "Probabilidad Fundamental", 
     "Ecuaciones Diferenciales", "Fundamentos de Electricidad y Magnetismo",
     "Fundamentos de Mecánica"
   ],
