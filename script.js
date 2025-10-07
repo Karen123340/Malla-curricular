@@ -282,4 +282,3 @@ window.onload = () => {
   actualizarContadores();
   document.getElementById("botonReiniciar").addEventListener("click", reiniciarProgreso);
 };
-Y este el script.js
