@@ -33,7 +33,7 @@ const tipos = {
 };
 
 const ramos = {
-     "Matematicas Basicas"
+     "Matematicas Basicas": {
        semestre: 1, creditos: 4, prerequisitos: [],
     desbloquea: ["Cálculo Diferencial"]
   },
