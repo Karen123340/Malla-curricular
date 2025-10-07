@@ -1,147 +1,207 @@
-/* === Estilo general === */
+/* estilos.css - estilo inspirado exactamente en la paleta rosado-violeta de referencia */
+
+/* reset básico */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html,body { height: 100%; }
+
+/* fuente y fondo */
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: #fff8fb;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  color: #333;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: #fff8fb;
+  color: #2b2430;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 28px 18px 140px; /* espacio inferior para poder hacer scroll y ver el panel */
 }
 
-h1 {
-  margin: 30px 0;
+/* encabezado */
+header { text-align: center; margin-bottom: 18px; }
+header h1 {
   color: #c83c8e;
-  font-size: 2em;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
 }
 
-/* === Contenedor de la malla === */
-#contenedor {
+/* contenedor general de la malla: filas (cada fila = semestre) */
+#main { max-width: 1200px; margin: 0 auto; }
+#malla { display: flex; flex-direction: column; gap: 18px; }
+
+/* cada fila (un semestre) */
+.fila-semestre {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: nowrap;
-  gap: 20px;
-  padding: 20px;
-  overflow-x: auto;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.semestre {
-  flex: 0 0 210px;
-  border-radius: 18px;
-  padding: 12px;
-  background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-/* === Títulos de semestre === */
-.semestre h2 {
-  margin: 8px 0 15px 0;
-  padding: 6px 0;
+/* título del semestre arriba, con color de la paleta */
+.sem-title {
+  padding: 8px 12px;
+  border-radius: 12px;
   color: #fff;
-  border-radius: 10px;
-  font-size: 1.1em;
+  font-weight: 700;
+  width: fit-content;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
-/* === Colores exactos de los semestres (tomados del ejemplo) === */
-.sem1 h2 { background-color: #d69ac4; }  /* Rosado claro */
-.sem2 h2 { background-color: #c694d1; }  /* Lila */
-.sem3 h2 { background-color: #a59ce0; }  /* Azul lavanda */
-.sem4 h2 { background-color: #e2a1c5; }  /* Rosa chicle */
-.sem5 h2 { background-color: #efb1b6; }  /* Rosa pálido */
-.sem6 h2 { background-color: #f4b7a5; }
-.sem7 h2 { background-color: #f5c59e; }
-.sem8 h2 { background-color: #f7d895; }
-.sem9 h2 { background-color: #f9e89c; }
-.sem10 h2 { background-color: #faefb2; }
+/* contenedor de materias en la fila: tarjetas cuadradas alineadas horizontalmente */
+.materias-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
 
-/* === Materias === */
+/* tarjeta (cuadrada) */
 .materia {
-  background-color: #fdf6fb;
-  border: 1px solid #f1d8ea;
-  border-radius: 10px;
-  padding: 8px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  transition: 0.2s;
-}
-
-.materia:hover {
-  transform: scale(1.03);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-}
-
-.materia strong {
-  display: block;
-  color: #5b285a;
-  margin-bottom: 4px;
-}
-
-/* === Select de notas === */
-.materia select {
-  width: 100%;
-  margin-top: 4px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  padding: 3px;
-  font-size: 0.9em;
-}
-
-/* === Bloqueadas === */
-.bloqueada {
-  opacity: 0.4;
+  width: 160px;          /* cuadrado */
+  height: 160px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: default;
   position: relative;
+  min-width: 160px;
 }
 
-.bloqueada::after {
+/* nombre y créditos */
+.materia .titulo {
+  font-size: 14px;
+  font-weight: 700;
+  color: #35183a;
+  line-height: 1.15;
+}
+.materia .creditos {
+  font-size: 12px;
+  color: #5b3b53;
+}
+
+/* input nota (vacío por defecto), step 0.1 */
+.materia input.nota {
+  width: 100%;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.08);
+  text-align: center;
+  font-size: 14px;
+}
+
+/* estado bloqueado: opacidad y pointer-events none */
+.materia.bloqueada {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* tooltip - cuando existe data-tooltip y la tarjeta está bloqueada, se muestra al hover (o siempre al pasar) */
+.materia[data-tooltip]:hover::after {
   content: attr(data-tooltip);
   position: absolute;
-  background: #c83c8e;
-  color: white;
-  font-size: 0.75em;
-  border-radius: 6px;
-  padding: 4px 8px;
-  bottom: 110%;
   left: 50%;
   transform: translateX(-50%);
-  opacity: 0;
-  transition: 0.2s;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.bloqueada:hover::after {
-  opacity: 1;
-}
-
-/* === Sección de resumen al final === */
-#resumen {
-  margin-top: 40px;
-  padding: 20px;
-  background: #ffe8f3;
-  border-top: 3px solid #c83c8e;
-  border-radius: 20px 20px 0 0;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#resumen p {
-  margin: 6px 0;
-  font-size: 1em;
-}
-
-#reiniciar {
-  margin-top: 10px;
-  background-color: #c83c8e;
-  color: white;
-  border: none;
+  bottom: calc(100% + 8px);
+  background: rgba(56, 4, 81, 0.95);
+  color: #fff;
+  padding: 6px 10px;
   border-radius: 8px;
-  padding: 8px 14px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 40;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-#reiniciar:hover {
-  background-color: #a82c74;
+/* ===========================================
+   PALETA: colores por semestre (encabezado y fondo sutil)
+   Use exactamente tonos rosado-violeta similar referencia
+   =========================================== */
+
+/* Semestre 1 - violeta suave */
+.sem1 .sem-title { background: linear-gradient(180deg,#d69ac4,#c47bff); }
+.sem1 .materia { background: linear-gradient(180deg,#f6e9f6,#f0e5fb); border-color: rgba(196,123,255,0.25); }
+
+/* Semestre 2 - lila */
+.sem2 .sem-title { background: linear-gradient(180deg,#c694d1,#9e91ff); }
+.sem2 .materia { background: linear-gradient(180deg,#f3effb,#eeebff); border-color: rgba(158,145,255,0.25); }
+
+/* Semestre 3 - lavanda-azul */
+.sem3 .sem-title { background: linear-gradient(180deg,#a59ce0,#7cd1ff); }
+.sem3 .materia { background: linear-gradient(180deg,#ecf7ff,#e6fbff); border-color: rgba(124,209,255,0.25); }
+
+/* Semestre 4 - rosa chicle / menta rosada */
+.sem4 .sem-title { background: linear-gradient(180deg,#e2a1c5,#ff9ac9); }
+.sem4 .materia { background: linear-gradient(180deg,#fff1f7,#fff3f9); border-color: rgba(255,154,201,0.25); }
+
+/* Semestre 5 - rosa pálido */
+.sem5 .sem-title { background: linear-gradient(180deg,#efb1b6,#ffc6c9); }
+.sem5 .materia { background: linear-gradient(180deg,#fff5f6,#fffafafb); border-color: rgba(255,198,201,0.25); }
+
+/* Semestre 6 - salmón */
+.sem6 .sem-title { background: linear-gradient(180deg,#f4b7a5,#ff9b7a); }
+.sem6 .materia { background: linear-gradient(180deg,#fff6f4,#fff9f8); border-color: rgba(255,155,122,0.18); }
+
+/* Semestre 7 - durazno */
+.sem7 .sem-title { background: linear-gradient(180deg,#f5c59e,#ffb78f); }
+.sem7 .materia { background: linear-gradient(180deg,#fff7f4,#fff9f6); border-color: rgba(255,183,143,0.18); }
+
+/* Semestre 8 - amarillo-rosado */
+.sem8 .sem-title { background: linear-gradient(180deg,#f7d895,#ffd48a); }
+.sem8 .materia { background: linear-gradient(180deg,#fffaf0,#fffdf2); border-color: rgba(255,212,138,0.18); }
+
+/* Semestre 9 - pálido */
+.sem9 .sem-title { background: linear-gradient(180deg,#f9e89c,#ffe5a0); }
+.sem9 .materia { background: linear-gradient(180deg,#fffbf1,#fffdf3); border-color: rgba(255,232,156,0.18); }
+
+/* Semestre 10 - crema pálido */
+.sem10 .sem-title { background: linear-gradient(180deg,#faefb2,#fff1bf); }
+.sem10 .materia { background: linear-gradient(180deg,#fffef6,#fffef8); border-color: rgba(255,241,179,0.18); }
+
+/* ===========================================
+   Panel final (aparece solo al llegar al final del scroll)
+   estilo igual al degradado rosado-violeta y texto en blanco
+   =========================================== */
+#panel-final {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  min-width: 320px;
+  max-width: 880px;
+  width: calc(100% - 48px);
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  display: none; /* aparece solo cuando se llega al final */
+  z-index: 80;
+}
+#panel-final .panel-inner {
+  padding: 14px 18px;
+  border-radius: 12px;
+  display:flex;
+  gap: 18px;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg,#c47bff,#ff7bf2);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: inset 0 -2px 0 rgba(255,255,255,0.06);
+}
+#panel-final .panel-inner div { font-size: 14px; }
+#btnReiniciar {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight:700;
+}
+#btnReiniciar:hover { background: rgba(255,255,255,0.22); }
+
+/* responsivo: reducir tamaño de tarjeta en pantallas pequeñas */
+@media (max-width: 720px) {
+  .materia { width: 130px; height: 130px; min-width: 130px; }
 }
