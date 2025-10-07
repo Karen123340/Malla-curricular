@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Malla Curricular - Ingeniería Industrial</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="estilos.css" />
 </head>
 <body>
-  <h1>Malla Curricular - Ingeniería Industrial</h1>
+  <header>
+    <h1>Malla Curricular - Ingeniería Industrial</h1>
+  </header>
 
-  <div id="malla-container"></div>
+  <main>
+    <div id="malla-container"></div>
 
-  <div class="info">
-    <p><strong>Créditos completados:</strong> <span id="creditosCompletados">0</span> / 168 (<span id="porcentajeAvance">0.00</span>%)</p>
-    <button id="botonReiniciar">Reiniciar progreso</button>
-  </div>
+    <section id="resumen">
+      <div><strong>P.A.P.A.:</strong> <span id="papa">0.0</span></div>
+      <div><strong>P.A.P.P.I.:</strong> <span id="pappi">0.0</span></div>
+      <div><strong>Créditos completados:</strong> <span id="creditosCompletados">0</span> / 168</div>
+      <div><strong>Avance:</strong> <span id="porcentajeAvance">0.0</span>%</div>
+      <button id="botonReiniciar">Reiniciar progreso</button>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
