@@ -1,3 +1,4 @@
+/* Bloque de variables de color (ASEGÚRATE DE LA SINTAXIS) */
 :root {
   --color-fundacion: #E1C6FF;      /* Morado claro pastel */
   --color-disciplinar: #D0B0FF;    /* Morado medio pastel */
@@ -20,12 +21,8 @@ h1 {
   font-size: 1.8em;
 }
 
-/* ... (reglas :root, body, h1 anteriores) ... */
-
-/* ... (Reglas :root y body anteriores) ... */
-
+/* 1. LAYOUT DE LA MALLA (Horizontal) */
 #malla-container {
-  /* ESTAS LÍNEAS DEBEN ESTAR AQUÍ, SON LA CLAVE DEL LAYOUT HORIZONTAL */
   display: flex; 
   flex-wrap: nowrap;
   overflow-x: auto;
@@ -34,11 +31,10 @@ h1 {
   justify-content: flex-start;
 }
 
+/* 2. LAYOUT DEL SEMESTRE (Vertical) */
 .semestre {
-  /* ESTAS LÍNEAS DEBEN ESTAR AQUÍ, SON LA CLAVE DEL LAYOUT VERTICAL DE ASIGNATURAS */
   display: flex;
   flex-direction: column; 
-  /* -------------------------------------------------------------------------- */
   
   background-color: #F9F4EF; 
   border: 1px solid #e0dcd8;
@@ -48,8 +44,6 @@ h1 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-/* ... (Reglas .semestre h2, .ramo, y colores/estados anteriores) ... */
-
 .semestre h2 {
   margin-top: 0;
   margin-bottom: 10px;
@@ -57,6 +51,7 @@ h1 {
   color: #4a4a4a;
 }
 
+/* 3. ESTILO DE LA ASIGNATURA (Caja) */
 .ramo {
   border-radius: 10px;
   padding: 10px;
@@ -67,7 +62,6 @@ h1 {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
-/* ... (resto de reglas para .fundacion, .disciplinar, .aprobado, .bloqueado, etc.) ... */
 /* Tipos de ramos */
 .fundacion {
   background-color: var(--color-fundacion);
@@ -104,7 +98,7 @@ h1 {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) inset;
 }
 
-/* Hover solo en ramos NO bloqueados ni aprobados */
+/* Hover */
 .ramo:not(.bloqueado):not(.aprobado):hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
